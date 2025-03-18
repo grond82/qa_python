@@ -25,14 +25,16 @@ class TestBooksCollector:
     # напиши свои тесты ниже
     # чтобы тесты были независимыми в каждом из них создавай отдельный экземпляр класса BooksCollector()
 
-    def test_add_new_book_add_book_with_long_name(self):
+    @pytest.mark.parametrize(
+        'name',
+        [
+            '',
+            'Это очень длинное название книги для проверки'
+        ]
+    )
+    def test_add_new_book_add_book_with_long_and_zero_name(self,name):
         collector = BooksCollector()
-        collector.add_new_book('Это очень длинное название книги для проверки')
-        assert len(collector.get_books_genre()) == 0
-
-    def test_add_new_book_add_book_with_zero_name(self):
-        collector = BooksCollector()
-        collector.add_new_book('')
+        collector.add_new_book(name)
         assert len(collector.get_books_genre()) == 0
 
     @pytest.mark.parametrize(
@@ -90,7 +92,7 @@ class TestBooksCollector:
     def test_add_book_in_favorites_add_book(self):
         collector = BooksCollector()
         collector.add_new_book('12 стульев')
-        collector.set_book_genre('12 стульев', 'Комедии')
+        #collector.set_book_genre('12 стульев', 'Комедии')
         collector.add_book_in_favorites('12 стульев')
         assert len(collector.favorites) == 1
 
